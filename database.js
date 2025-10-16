@@ -70,7 +70,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 answer TEXT,
                 asked_by INTEGER,
                 item_id INTEGER,
-                FOREIGN KEY (asked_by) REFERENCES users(user_id)
+                FOREIGN KEY (asked_by) REFERENCES users(user_id),
                 FOREIGN KEY (item_id) REFERENCES items(item_id)
             )`, (err) => {
                 if(err){
