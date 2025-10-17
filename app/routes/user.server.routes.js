@@ -78,5 +78,15 @@ module.exports = function(app) {
             return res.status(200).send(user);
         });
     });
+
+    app.post('/login', (req, res) => {
+        // Login functionality to be implemented
+        return res.status(501).send("Not implemented");
+    });
+
+    app.post('/logout', (req, res) => {
+        // Logout functionality to be implemented
+        return res.status(501).send("Not implemented");
+    });
 }
 
