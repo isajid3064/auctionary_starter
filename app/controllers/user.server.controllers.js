@@ -12,8 +12,8 @@ const getAllUsers = (req,res) => {
 
 const createUser = (req,res) => {
         const schema = Joi.object({
-            first_name: Joi.string().min(1).required(),
-            last_name: Joi.string().min(1).required(),
+            first_name: Joi.string().min(2).max(60).required(),
+            last_name: Joi.string().min(2).max(60).required(),
             email: Joi.string().email().required(),
             password: Joi.string().min(8).required()
                 .pattern(new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])'))
@@ -24,12 +24,12 @@ const createUser = (req,res) => {
 
         const {error} = schema.validate(req.body);
         if(error){
-            return res.status(400).send(error.details[0].message);
+            return res.status(400).json({error_message: error.details[0].message});
         }
         let userToCreate = Object.assign({}, req.body);
 
         users.createUser(userToCreate, (err, userId) => {
-            if(err) return  res.status(400).send("Couldnt create user");
+            if(err) return  res.status(400).json({error_message:"Couldnt create user"});
             return res.status(201).json({ user_id: userId });
         });
 };

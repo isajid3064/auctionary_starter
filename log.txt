@@ -1,0 +1,1380 @@
+
+> auctionary_starter@1.0.0 test
+> mocha ./tests/test.*.js --reporter spec --log-level=warn --timeout 10000
+
+
+
+  Test successful creation of users
+[Script: test.a.user.creation.js]
+    ✔ Should return 201, and JSON with user_id of new user: dkells0@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: jmorston1@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: rgiovanardi2@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: bissit3@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: eondricek4@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: ldowding5@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: llindfors6@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: rlavalde7@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: sstivani8@gmail.com
+    ✔ Should return 201, and JSON with user_id of new user: fdeehan9@gmail.com
+
+  Test malformed creation of users
+[Script: test.a.user.creation.js]
+    ✔ Should return a 400 status code: Test blank first_name
+    ✔ Should return a 400 status code: Test blank last_name
+    ✔ Should return a 400 status code: Test blank email
+    ✔ Should return a 400 status code: Test blank password
+    ✔ Should return a 400 status code: Test duplicate email
+    ✔ Should return a 400 status code: Test password too short
+    ✔ Should return a 400 status code: Test password too long
+    ✔ Should return a 400 status code: Test password without numbers
+    ✔ Should return a 400 status code: Test password without special character
+    ✔ Should return a 400 status code: Test password without upper case character
+    ✔ Should return a 400 status code: Test password without lower case character
+    ✔ Should return 400 status code: missing first name
+    ✔ Should return 400 status code: missing last name
+    ✔ Should return 400 status code: missing email
+    ✔ Should return 400 status code: missing password
+    ✔ Should return 400 status code: extra field
+
+  Test user login/logout
+[Script: test.b.authentication.js]
+    1) Should return 200 status code for successful login
+    2) Should return the same token if a logged in user tried to login again
+    3) Should return 400 status code for incorrect email
+    4) Should return 400 status code for incorrect password
+    5) Should return 400 status code for missing password
+    6) Should return 400 status code for missing email
+    7) Should return 400 status code for extra field
+    8) Should return 401 status code for logging out user not logged in
+    9) Should return 200 status code for logging out user who is logged in
+
+  Test adding items if not logged in
+[Script: test.c.auction.creation.js]
+    10) Should return 401
+    11) Should return 401
+    12) Should return 401
+    13) Should return 401
+    14) Should return 401
+    15) Should return 401
+    16) Should return 401
+    17) Should return 401
+    18) Should return 401
+    19) Should return 401
+
+  Log into account.
+[Script: test.c.auction.creation.js]
+    20) Should return 200, and JSON with user_id and session_token
+
+  Test successful creation of items when logged in
+[Script: test.c.auction.creation.js]
+    21) Should return 201, and JSON with item_id of new item: Stylish patterned knit scarf.
+    22) Should return 201, and JSON with item_id of new item: Bartender kit with shaker, jigger, and strainer.
+    23) Should return 201, and JSON with item_id of new item: Barely used lawn mower.
+    24) Should return 201, and JSON with item_id of new item: Chewy snack bars with coconut and almonds coated in chocolate.
+    25) Should return 201, and JSON with item_id of new item: Stylish smartwatch with fitness tracking and notifications.
+    26) Should return 201, and JSON with item_id of new item: Sweet and crunchy honey-flavored crackers.
+    27) Should return 201, and JSON with item_id of new item: Pure maple syrup for pancakes and more.
+    28) Should return 201, and JSON with item_id of new item: Infuser for brewing loose-leaf herbal teas easily.
+    29) Should return 201, and JSON with item_id of new item: UV-blocking clothing for outdoor activities.
+    30) Should return 201, and JSON with item_id of new item: Crunchy granola with almonds and a hint of vanilla, perfect for breakfast.
+
+  Test creation of events when logged in which should not pass validation checks
+[Script: test.c.auction.creation.js]
+    31) Should return 400 status code: missing name
+    32) Should return 400 status code: missing description
+    33) Should return 400 status code: missing starting_bid
+    34) Should return 400 status code: missing end_date
+    35) Should return 400 status code: extra field
+    36) Should return a 400 status code: Test blank name
+    37) Should return a 400 status code: Test blank description
+    38) Should return a 400 status code: Test blank starting bid
+    39) Should return a 400 status code: Test blank end_date
+    40) Should return a 400 status code: Test negative starting_bid
+    41) Should return a 400 status code: Test end date in the past
+    42) Should return a 400 status code: Test invalid start
+
+  Bidding on an auction when not authenticated
+[Script: test.d.bidding.js]
+    43) Should return a 401
+
+  Log into user account
+[Script: test.d.bidding.js]
+    44) Should return 200, and JSON with user_id and session_token of the user
+    45) Should return 200, and JSON with user_id and session_token of the user
+
+  Test bidding when logged in which should not pass validation checks
+[Script: test.d.bidding.js]
+    46) Should return 400 status code: extra field
+    47) Should return 400 status code: blank amount
+    48) Should return 400 status code: invalid amount
+    49) Should return 400 status code: amount less or equal than current bid (3595)
+
+  Test bidding in situations that should fail
+[Script: test.d.bidding.js]
+    50) Should return 403 status code: can not bid on own items
+    ✔ Should return 404 status code: item does not exist
+
+  Test bidding success
+[Script: test.d.bidding.js]
+    51) Should return 201 status code
+    52) Should return 201 status code
+
+  Getting bid history of an auction that does not exist
+    ✔ Should return 404
+
+  Getting bid history of an auction with no bids
+    53) Should return 200 but with an empty list
+
+  Getting bid history of an auction with bids
+    54) Should return 200 with two bids
+
+  Getting item details of an auction that does not exist
+    ✔ Should return 404
+
+  Getting item details of an auction with no bids
+    55) Should return 200 but with an empty bid holder
+
+  Getting item details of an auction with bids
+    56) Should return 200 but with a bid holder
+
+  Getting user details of a user that does not exist
+    ✔ Should return 404
+
+  Getting user details of a user with no items or bids
+    57) Should return 200 but with empty lists
+
+  Getting user details of a user with items but no bids
+    58) Should return 200
+
+  Getting user details of a user with no items but bids
+    59) Should return 200
+
+  Test asking question if not logged in
+[Script: test.h.auction.questions.js]
+    60) Should return 401
+
+  Log into account.
+[Script: test.h.auction.questions.js]
+    61) Should return 200, and JSON with user_id and session_token
+    62) Should return 200, and JSON with user_id and session_token
+
+  Test asking questions if logged in
+[Script: test.h.auction.questions.js]
+    63) Should return 200 - user 2 asking a question on item 1
+    64) Should return 200 - user 2 asking a question on item 1
+    65) Should return 403 - user 1 asking a question on item 1 as they are the creator
+    66) Should return 400 if question is empty
+    67) Should return 400 if question is missing
+    68) Should return 400 if extra field is present
+    ✔ Should return 404 if item does not exist
+
+  Test answering questions
+    69) Should return 401 if not logged in
+    70) Should return 403 if user 2 trys to answer a question for an auction they did not create
+    ✔ Should return 404 if the question does not exist
+    71) Should return 400 if the answer is blank
+    72) Should return 400 if the answer is missing
+    73) Should return 400 if the answer contains an extra field
+    74) Should return 200 if user 1 answers a question on item 1
+
+  Test retrieving questions
+    ✔ Should return 404 if the item does not exist
+    75) Should return 200, but with an empty list if the item has no questions
+    76) Should return 200, with 2 questions on item 1. One question should have an answer and new questions should appear first.
+
+  Log into account.
+[Script: test.i.search.js]
+    77) Should return 200, and JSON with user_id and session_token
+    78) Should return 200, and JSON with user_id and session_token
+
+  Searching with no criteria, and no authentication, to test pagination.
+    79) Should return 200, with an array of 10 objects
+    80) Should return 200, with an array of 9 objects when offsetting by 1
+    81) Should return 200, with an array of 8 objects when offsetting by 2
+    82) Should return 200, with an array of 5 objects when limiting to 5
+    83) Should return 200, with an array of 0 objects when limiting to 5 and offsetting by 10
+
+  Searching by status
+    84) Should return 400 if status is not recognised
+    85) Should return 400 if status is BID but not authenticated
+    86) Should return 400 if status is OPEN but not authenticated
+    87) Should return 200 with 10 objects if status is OPEN and logged in as user1
+    88) Should return 200 with 0 objects if status is OPEN and logged in as user2
+    89) Should return 200 with 0 objects if status is BID and logged in as user1
+    90) Should return 200 with 1 objects if status is BID and logged in as user2
+    91) Should return 200 with 0 objects if status is ARCHIVE, logged in as user2
+
+  Searching by query string
+    92) Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1
+    93) Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2
+    94) Should return 200, with 1 objects when searching all items with the string 'uv'
+    95) Should return 200, with 0 objects when searching all auctions with the string 'xxx'
+
+
+  33 passing (130ms)
+  95 failing
+
+  1) Test user login/logout
+       Should return 200 status code for successful login:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:31:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  2) Test user login/logout
+       Should return the same token if a logged in user tried to login again:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:50:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  3) Test user login/logout
+       Should return 400 status code for incorrect email:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:71:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  4) Test user login/logout
+       Should return 400 status code for incorrect password:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:90:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  5) Test user login/logout
+       Should return 400 status code for missing password:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:108:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  6) Test user login/logout
+       Should return 400 status code for missing email:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:126:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  7) Test user login/logout
+       Should return 400 status code for extra field:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:146:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  8) Test user login/logout
+       Should return 401 status code for logging out user not logged in:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:160:36
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  9) Test user login/logout
+       Should return 200 status code for logging out user who is logged in:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.b.authentication.js:172:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  10) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  11) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  12) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  13) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  14) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  15) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  16) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  17) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  18) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  19) Test adding items if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:38:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  20) Log into account.
+       Should return 200, and JSON with user_id and session_token:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:61:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  21) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Stylish patterned knit scarf.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  22) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Bartender kit with shaker, jigger, and strainer.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  23) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Barely used lawn mower.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  24) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Chewy snack bars with coconut and almonds coated in chocolate.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  25) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Stylish smartwatch with fitness tracking and notifications.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  26) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Sweet and crunchy honey-flavored crackers.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  27) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Pure maple syrup for pancakes and more.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  28) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Infuser for brewing loose-leaf herbal teas easily.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  29) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: UV-blocking clothing for outdoor activities.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  30) Test successful creation of items when logged in
+       Should return 201, and JSON with item_id of new item: Crunchy granola with almonds and a hint of vanilla, perfect for breakfast.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:90:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  31) Test creation of events when logged in which should not pass validation checks
+       Should return 400 status code: missing name:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:116:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  32) Test creation of events when logged in which should not pass validation checks
+       Should return 400 status code: missing description:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:135:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  33) Test creation of events when logged in which should not pass validation checks
+       Should return 400 status code: missing starting_bid:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:154:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  34) Test creation of events when logged in which should not pass validation checks
+       Should return 400 status code: missing end_date:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:173:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  35) Test creation of events when logged in which should not pass validation checks
+       Should return 400 status code: extra field:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:194:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  36) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test blank name:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  37) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test blank description:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  38) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test blank starting bid:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  39) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test blank end_date:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  40) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test negative starting_bid:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  41) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test end date in the past:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  42) Test creation of events when logged in which should not pass validation checks
+       Should return a 400 status code: Test invalid start:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.c.auction.creation.js:215:41
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  43) Bidding on an auction when not authenticated
+       Should return a 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:31:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  44) Log into user account
+       Should return 200, and JSON with user_id and session_token of the user:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:52:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  45) Log into user account
+       Should return 200, and JSON with user_id and session_token of the user:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:71:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  46) Test bidding when logged in which should not pass validation checks
+       Should return 400 status code: extra field:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:97:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  47) Test bidding when logged in which should not pass validation checks
+       Should return 400 status code: blank amount:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:114:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  48) Test bidding when logged in which should not pass validation checks
+       Should return 400 status code: invalid amount:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:131:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  49) Test bidding when logged in which should not pass validation checks
+       Should return 400 status code: amount less or equal than current bid (3595):
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:148:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  50) Test bidding in situations that should fail
+       Should return 403 status code: can not bid on own items:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 403 but got 404
+      + expected - actual
+
+      -404
+      +403
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:171:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  51) Test bidding success
+       Should return 201 status code:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:209:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  52) Test bidding success
+       Should return 201 status code:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 201 but got 404
+      + expected - actual
+
+      -404
+      +201
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.d.bidding.js:224:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  53) Getting bid history of an auction with no bids
+       Should return 200 but with an empty list:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.e.bidhistory.js:34:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  54) Getting bid history of an auction with bids
+       Should return 200 with two bids:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.e.bidhistory.js:45:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  55) Getting item details of an auction with no bids
+       Should return 200 but with an empty bid holder:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.f.view.auction.js:34:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  56) Getting item details of an auction with bids
+       Should return 200 but with a bid holder:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.f.view.auction.js:73:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  57) Getting user details of a user with no items or bids
+       Should return 200 but with empty lists:
+     AssertionError: expected { user_id: 3, …(3) } to have property 'selling'
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.g.view.user.js:46:42
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  58) Getting user details of a user with items but no bids
+       Should return 200:
+     AssertionError: expected { user_id: 1, …(3) } to have property 'selling'
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.g.view.user.js:74:42
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  59) Getting user details of a user with no items but bids
+       Should return 200:
+     AssertionError: expected { user_id: 2, …(3) } to have property 'selling'
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.g.view.user.js:121:42
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  60) Test asking question if not logged in
+       Should return 401:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:40:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  61) Log into account.
+       Should return 200, and JSON with user_id and session_token:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:62:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  62) Log into account.
+       Should return 200, and JSON with user_id and session_token:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:81:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  63) Test asking questions if logged in
+       Should return 200 - user 2 asking a question on item 1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:106:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  64) Test asking questions if logged in
+       Should return 200 - user 2 asking a question on item 1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:121:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  65) Test asking questions if logged in
+       Should return 403 - user 1 asking a question on item 1 as they are the creator:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 403 but got 404
+      + expected - actual
+
+      -404
+      +403
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:136:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  66) Test asking questions if logged in
+       Should return 400 if question is empty:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:151:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  67) Test asking questions if logged in
+       Should return 400 if question is missing:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:164:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  68) Test asking questions if logged in
+       Should return 400 if extra field is present:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:182:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  69) Test answering questions
+       Should return 401 if not logged in:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 401 but got 404
+      + expected - actual
+
+      -404
+      +401
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:217:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  70) Test answering questions
+       Should return 403 if user 2 trys to answer a question for an auction they did not create:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 403 but got 404
+      + expected - actual
+
+      -404
+      +403
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:232:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  71) Test answering questions
+       Should return 400 if the answer is blank:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:262:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  72) Test answering questions
+       Should return 400 if the answer is missing:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:277:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  73) Test answering questions
+       Should return 400 if the answer contains an extra field:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:295:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  74) Test answering questions
+       Should return 200 if user 1 answers a question on item 1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:312:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  75) Test retrieving questions
+       Should return 200, but with an empty list if the item has no questions:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:334:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  76) Test retrieving questions
+       Should return 200, with 2 questions on item 1. One question should have an answer and new questions should appear first.:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:343:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  77) Log into account.
+       Should return 200, and JSON with user_id and session_token:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:35:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  78) Log into account.
+       Should return 200, and JSON with user_id and session_token:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:54:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  79) Searching with no criteria, and no authentication, to test pagination.
+       Should return 200, with an array of 10 objects:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:71:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  80) Searching with no criteria, and no authentication, to test pagination.
+       Should return 200, with an array of 9 objects when offsetting by 1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:91:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  81) Searching with no criteria, and no authentication, to test pagination.
+       Should return 200, with an array of 8 objects when offsetting by 2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:103:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  82) Searching with no criteria, and no authentication, to test pagination.
+       Should return 200, with an array of 5 objects when limiting to 5:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:115:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  83) Searching with no criteria, and no authentication, to test pagination.
+       Should return 200, with an array of 0 objects when limiting to 5 and offsetting by 10:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:127:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  84) Searching by status
+       Should return 400 if status is not recognised:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:142:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  85) Searching by status
+       Should return 400 if status is BID but not authenticated:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:153:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  86) Searching by status
+       Should return 400 if status is OPEN but not authenticated:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
+      + expected - actual
+
+      -404
+      +400
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:164:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  87) Searching by status
+       Should return 200 with 10 objects if status is OPEN and logged in as user1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:176:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  88) Searching by status
+       Should return 200 with 0 objects if status is OPEN and logged in as user2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:189:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  89) Searching by status
+       Should return 200 with 0 objects if status is BID and logged in as user1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:202:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  90) Searching by status
+       Should return 200 with 1 objects if status is BID and logged in as user2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:215:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  91) Searching by status
+       Should return 200 with 0 objects if status is ARCHIVE, logged in as user2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:228:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  92) Searching by query string
+       Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:245:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  93) Searching by query string
+       Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:258:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  94) Searching by query string
+       Should return 200, with 1 objects when searching all items with the string 'uv':
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:270:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  95) Searching by query string
+       Should return 200, with 0 objects when searching all auctions with the string 'xxx':
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:282:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+
+
+ejections (node:internal/process/task_queues:105:5)
+
+  93) Searching by query string
+       Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2:
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:258:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  94) Searching by query string
+       Should return 200, with 1 objects when searching all items with the string 'uv':
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:270:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+  95) Searching by query string
+       Should return 200, with 0 objects when searching all auctions with the string 'xxx':
+
+      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
+      + expected - actual
+
+      -404
+      +200
+      
+      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:282:37
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+
+
