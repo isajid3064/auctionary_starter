@@ -14,4 +14,7 @@ module.exports = function(app) {
 
     app.route('/users/:user_id')
         .get(users.getUserById);    
+    
+    app.route('/login')
+        .post(users.login);
 };

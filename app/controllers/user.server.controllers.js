@@ -34,6 +34,44 @@ const createUser = (req,res) => {
         });
 };
 
+const login = (req, res) => {
+    const schema = Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    });
+
+    const {error} = schema.validate(req.body);
+    if(error){
+        return res.status(400).json({error_message: error.details[0].message});
+    }
+
+    let email = req.body.email;
+    let password = req.body.password;
+
+    users.authenticateUser(email, password, (err, userId) => {
+        if(err === 404){
+            return res.status(400).json({error_message: "Invalid Email/Password supplied"});
+        }if(err){
+            return res.status(500);
+        }
+        users.getToken(userId, (err, token) => {
+            if(err){
+                return res.status(500);
+            }
+            if(token){
+                return res.status(200).json({ user_id: userId, session_token: token });
+            }else{
+                users.setToken(userId, (err, newToken) => {
+                    if(err){
+                        return res.status(500);
+                    }
+                    return res.status(200).json({user_id:userId, session_token: newToken });
+                });
+            }
+        });
+    });
+};
+
 const getUserById = (req,res) => {
     const userId = req.params.user_id;
     users.getUserById(userId, (err, user) => {
@@ -47,5 +85,6 @@ const getUserById = (req,res) => {
 module.exports = {
     getAllUsers: getAllUsers,
     createUser: createUser,
-    getUserById: getUserById
+    getUserById: getUserById,
+    login: login
 };
