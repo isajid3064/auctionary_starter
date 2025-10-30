@@ -1,5 +1,6 @@
 const express = require('express');
-const core = require('../controllers/core.server.controllers');
+const core = require('../controllers/core.server.controllers'),
+        auth = require('../lib/middleware');
 
 module.exports = function(app) {
     app.get('/item', (req, res) => {
@@ -7,6 +8,6 @@ module.exports = function(app) {
     });
 
     app.route('/item')
-        .post(core.createItem);
+        .post(auth.isAuthenticated,core.createItem);
 
 };
