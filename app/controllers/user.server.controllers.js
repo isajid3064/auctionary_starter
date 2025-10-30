@@ -72,6 +72,22 @@ const login = (req, res) => {
     });
 };
 
+const logout = (req, res) => {
+    const token = req.get('X-Authorization');
+    if (!token) {
+        return res.status(401).send("Missing token");
+    }
+
+    users.removeToken(token, function(err){
+        if (err){
+            return res.status(401).send("Invalid token");
+        } else {
+            return res.status(200).send("Successfully logged out");
+        }
+    });
+};
+
+
 const getUserById = (req,res) => {
     const userId = req.params.user_id;
     users.getUserById(userId, (err, user) => {
@@ -86,5 +102,6 @@ module.exports = {
     getAllUsers: getAllUsers,
     createUser: createUser,
     getUserById: getUserById,
-    login: login
+    login: login,
+    logout: logout
 };

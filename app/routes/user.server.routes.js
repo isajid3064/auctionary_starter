@@ -1,7 +1,7 @@
 const express = require('express');
-const Joi = require('joi');
-const db = require('../../database');
-const users = require('../controllers/user.server.controllers');
+
+const users = require('../controllers/user.server.controllers'),
+        auth = require('../lib/middleware');
 
 module.exports = function(app) {
     app.get('/user', (req, res) => {
@@ -13,8 +13,11 @@ module.exports = function(app) {
         .post(users.createUser);
 
     app.route('/users/:user_id')
-        .get(users.getUserById);    
+        .get(auth.isAuthenticated,users.getUserById);    
     
     app.route('/login')
         .post(users.login);
+
+    app.route('/logout')
+        .post(auth.isAuthenticated,users.logout);
 };

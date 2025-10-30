@@ -99,10 +99,22 @@ const setToken = (id,done) => {
 };
 
 const removeToken = (token, done) => {
-    const sql = 'UPDATE users SET session_token = NULL WHERE user_id = ?';
+    const sql = 'UPDATE users SET session_token = NULL WHERE session_token = ?';
+    
+    db.run(sql, [token], function(err) {
+        if (err) return done(err);
+        if (this.changes === 0) return done(new Error("Invalid token"));
+        return done(null);
+    });
+};
 
-    db.run(sql, [token], (err) => {
-        return done(err);
+const getIdFromToken = (token, done) => {
+    const sql = 'SELECT user_id FROM users WHERE session_token = ?';
+
+    db.get(sql, [token], (err, row) => {
+        if (err) return done(err);
+        if (!row) return done(null, null);
+        return done(null, row.user_id);
     });
 };
 
@@ -117,5 +129,6 @@ module.exports = {
     authenticateUser: authenticateUser,
     setToken: setToken,
     getToken: getToken,
-    removeToken: removeToken
+    removeToken: removeToken,
+    getIdFromToken: getIdFromToken
 };
