@@ -8,6 +8,9 @@ module.exports = function(app) {
 
     app.route('/item')
         .post(auth.isAuthenticated,core.createItem);
+
+    app.route('/item/:item_id')
+        .get(core.getItemDetails);
     
     app.route('/item/:item_id/bid')
         .get(core.getItemBidHistory)

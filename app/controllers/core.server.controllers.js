@@ -102,8 +102,24 @@ const getItemBidHistory = (req, res) => {
     });
 };
 
+const getItemDetails = (req, res) => {
+    const itemId = req.params.item_id;
+
+    core.getItemDetails(itemId, (err, item) => {
+        if (err) return res.status(500).json({ error: err });
+
+        if (!item) {
+            return res.status(404).send();
+        }
+
+        return res.status(200).json(item);
+    });
+};
+
+
 module.exports = {
     createItem: createItem,
     bidOnItem:bidOnItem,
-    getItemBidHistory: getItemBidHistory
+    getItemBidHistory: getItemBidHistory,
+    getItemDetails: getItemDetails
 };

@@ -72,10 +72,61 @@ const getItemBidHistory = (itemId, done) => {
     });
 };
 
+const getItemDetails = (itemId, done) => {
+    const sqlItem = `
+        SELECT 
+            i.item_id, i.name, i.description, i.starting_bid, 
+            i.start_date, i.end_date, i.creator_id,
+            u.first_name, u.last_name
+        FROM items i
+        JOIN users u ON i.creator_id = u.user_id
+        WHERE i.item_id = ?
+    `;
 
+    db.get(sqlItem, [itemId], (err, item) => {
+        if (err) return done(err);
+        if (!item) return done(null, null);
+
+        const sqlHighestBid = `
+            SELECT 
+                b.amount AS current_bid,
+                u.user_id, u.first_name, u.last_name
+            FROM bids b
+            JOIN users u ON b.user_id = u.user_id
+            WHERE b.item_id = ?
+            ORDER BY b.amount DESC
+            LIMIT 1
+        `;
+
+        db.get(sqlHighestBid, [itemId], (err, bid) => {
+            if (err) return done(err);
+
+            const response = {
+                item_id: item.item_id,
+                name: item.name,
+                description: item.description,
+                starting_bid: item.starting_bid,
+                start_date: item.start_date,
+                end_date: item.end_date,
+                creator_id: item.creator_id,
+                first_name: item.first_name,
+                last_name: item.last_name,
+                current_bid: bid ? bid.current_bid : item.starting_bid,
+                current_bid_holder: bid ? {
+                    user_id: bid.user_id,
+                    first_name: bid.first_name,
+                    last_name: bid.last_name
+                } : null
+            };
+
+            return done(null, response);
+        });
+    });
+};
 
 module.exports = {
     CreateItem: CreateItem,
     bidOnItem: bidOnItem,
-    getItemBidHistory: getItemBidHistory
+    getItemBidHistory: getItemBidHistory,
+    getItemDetails: getItemDetails
 };
