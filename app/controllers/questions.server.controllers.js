@@ -37,7 +37,42 @@ const createQuestion = (req, res) => {
     });
 };
 
+const answerQuestion = (req, res) => {
+    const token = req.get('X-Authorization');
+    if (!token) {
+        return res.status(401).json({ error_message: "Missing token" });
+    }
+
+    users.getIdFromToken(token, (err, userId) => {
+        if (err || !userId) {
+            return res.status(401).json({ error_message: "Invalid token" });
+        }
+
+        const schema = Joi.object({
+            answer_text: Joi.string().min(1).max(500).required()
+        });
+
+        const { error } = schema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error_message: error.details[0].message });
+        }
+
+        const questionToAnswer = {
+            question_id: parseInt(req.params.question_id),
+            answer: req.body.answer_text,
+            answered_by: userId,
+        };
+
+        questions.answerQuestion(questionToAnswer, (err) => {
+            if (err) {
+                return res.status(err.status || 500).json({ error_message: err.error });
+            }
+            return res.status(200).json({ message: "Answer submitted" });
+        });
+    });
+};
 
 module.exports = {
     createQuestion,
+    answerQuestion
 };
