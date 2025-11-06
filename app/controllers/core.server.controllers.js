@@ -88,8 +88,22 @@ const bidOnItem = (req, res) => {
     });
 };
 
+const getItemBidHistory = (req, res) => {
+    const itemId = parseInt(req.params.item_id);
+
+    core.getItemBidHistory(itemId, (err, result) => {
+        if (err) {
+            if (err.status === 404) {
+                return res.status(404).json({ error_message: err.error });
+            }
+            return res.status(500).json({ error_message: "Server error" });
+        }
+        return res.status(200).json(result);
+    });
+};
 
 module.exports = {
     createItem: createItem,
-    bidOnItem:bidOnItem
+    bidOnItem:bidOnItem,
+    getItemBidHistory: getItemBidHistory
 };

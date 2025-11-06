@@ -10,6 +10,6 @@ module.exports = function(app) {
         .post(auth.isAuthenticated,core.createItem);
     
     app.route('/item/:item_id/bid')
+        .get(core.getItemBidHistory)
         .post(auth.isAuthenticated,core.bidOnItem);       
-
 };

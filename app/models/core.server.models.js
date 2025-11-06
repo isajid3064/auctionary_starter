@@ -50,8 +50,32 @@ const bidOnItem = (bidData, done) => {
     });
 };
 
+const getItemBidHistory = (itemId, done) => {
+
+    const sqlItem = 'SELECT item_id FROM items WHERE item_id = ?';
+    db.get(sqlItem, [itemId], (err, item) => {
+        if (err) return done(err);
+        if (!item) return done({ status: 404, error: "Item not found" });
+
+        const sql = `
+            SELECT item_id, amount, timestamp, u.user_id, u.first_name, u.last_name
+            FROM bids b
+            JOIN users u ON b.user_id = u.user_id
+            WHERE b.item_id = ?
+            ORDER BY b.timestamp DESC
+        `;
+
+        db.all(sql, [itemId], (err, rows) => {
+            if (err) return done(err);
+            return done(null, rows);
+        });
+    });
+};
+
+
 
 module.exports = {
     CreateItem: CreateItem,
-    bidOnItem: bidOnItem
+    bidOnItem: bidOnItem,
+    getItemBidHistory: getItemBidHistory
 };
