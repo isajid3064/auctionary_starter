@@ -1,4 +1,3 @@
-const express = require('express');
 const core = require('../controllers/core.server.controllers'),
         auth = require('../lib/middleware');
 
@@ -9,5 +8,8 @@ module.exports = function(app) {
 
     app.route('/item')
         .post(auth.isAuthenticated,core.createItem);
+    
+    app.route('/item/:item_id/bid')
+        .post(auth.isAuthenticated,core.bidOnItem);       
 
 };
