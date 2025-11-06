@@ -14,6 +14,7 @@ const createQuestion = (req, res) => {
         }
 
         const schema = Joi.object({
+            question_text: Joi.string().min(1).max(500).required()
         });
 
         const { error } = schema.validate(req.body);
