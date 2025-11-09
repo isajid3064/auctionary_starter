@@ -39,21 +39,78 @@ const CreateUser = (userData, done) => {
     });
 };
 
-const GetUserById = (userId, done) => {
-    const sql = 'SELECT * FROM users WHERE user_id = ?';
-    const values = [userId];
-    db.get(sql, values, (err, row) => {
-        if(err) return done(err);
-        if(!row) return done(new Error("User not found"));
-        const user = {
-            user_id: row.user_id,
-            first_name: row.first_name,
-            last_name: row.last_name,
-            email: row.email
-        };
-        return done(null, user);
+const getUserById = (userId, done) => {
+    const sqlUser = 'SELECT user_id, first_name, last_name FROM users WHERE user_id = ?';
+    db.get(sqlUser, [userId], (err, user) => {
+        if (err) return done({ status: 500, error: err });
+        if (!user) return done({ status: 404, error: "User not found" });
+        const sqlSelling = `
+            SELECT 
+                i.item_id,
+                i.name,
+                i.description,
+                i.end_date,
+                i.creator_id,
+                u.first_name,
+                u.last_name
+            FROM items i
+            JOIN users u ON i.creator_id = u.user_id
+            WHERE i.creator_id = ?
+        `;
+
+        db.all(sqlSelling, [userId], (err, selling) => {
+            if (err) return done({ status: 500, error: err });
+            const sqlBidding = `
+                SELECT 
+                    i.item_id,
+                    i.name,
+                    i.description,
+                    i.end_date,
+                    i.creator_id,
+                    u.first_name,
+                    u.last_name
+                FROM bids b
+                JOIN items i ON b.item_id = i.item_id
+                JOIN users u ON i.creator_id = u.user_id
+                WHERE b.user_id = ?
+                GROUP BY i.item_id
+            `;
+
+            db.all(sqlBidding, [userId], (err, biddingOn) => {
+                if (err) return done({ status: 500, error: err });
+                const currentTime = Math.floor(Date.now() / 1000);
+                const sqlEnded = `
+                    SELECT 
+                        i.item_id,
+                        i.name,
+                        i.description,
+                        i.end_date,
+                        i.creator_id,
+                        u.first_name,
+                        u.last_name
+                    FROM items i
+                    JOIN users u ON i.creator_id = u.user_id
+                    WHERE i.creator_id = ?
+                    AND i.end_date < ?
+                `;
+
+                db.all(sqlEnded, [userId, currentTime], (err, auctionsEnded) => {
+                    if (err) return done({ status: 500, error: err });
+                    const result = {
+                        user_id: user.user_id,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        selling: selling || [],
+                        bidding_on: biddingOn || [],
+                        auctions_ended: auctionsEnded || []
+                    };
+
+                    return done(null, result);
+                });
+            });
+        });
     });
-}; 
+};
 
 const authenticateUser = (email, password, done) => {
     const sql = 'SELECT user_id, password, salt FROM users WHERE email = ?';
@@ -125,7 +182,7 @@ const getHash = (password, salt) => {
 module.exports = {
     getAllUsers: getAllUsers,
     createUser: CreateUser,
-    getUserById: GetUserById,
+    getUserById: getUserById,
     authenticateUser: authenticateUser,
     setToken: setToken,
     getToken: getToken,

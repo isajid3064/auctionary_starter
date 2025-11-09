@@ -13,7 +13,7 @@ module.exports = function(app) {
         .post(users.createUser);
 
     app.route('/users/:user_id')
-        .get(auth.isAuthenticated,users.getUserById);    
+        .get(users.getUserById);    
     
     app.route('/login')
         .post(users.login);

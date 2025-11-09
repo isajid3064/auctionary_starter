@@ -88,16 +88,16 @@ const logout = (req, res) => {
     });
 };
 
+const getUserById = (req, res) => {
+    const userId = parseInt(req.params.user_id);
 
-const getUserById = (req,res) => {
-    const userId = req.params.user_id;
     users.getUserById(userId, (err, user) => {
-        if(err) {
-            return res.status(404).send("User not found");
+        if (err) {
+            return res.status(err.status || 500).json({ error_message: err.error });
         }
         return res.status(200).json(user);
     });
-}; 
+};
 
 module.exports = {
     getAllUsers: getAllUsers,
