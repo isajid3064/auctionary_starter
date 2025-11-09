@@ -199,132 +199,23 @@
     ✔ Should return 400 if status is BID but not authenticated
     ✔ Should return 400 if status is OPEN but not authenticated
     ✔ Should return 200 with 10 objects if status is OPEN and logged in as user1
-    1) Should return 200 with 0 objects if status is OPEN and logged in as user2
-    2) Should return 200 with 0 objects if status is BID and logged in as user1
-    3) Should return 200 with 1 objects if status is BID and logged in as user2
-    4) Should return 200 with 0 objects if status is ARCHIVE, logged in as user2
+    ✔ Should return 200 with 0 objects if status is OPEN and logged in as user2
+    ✔ Should return 200 with 0 objects if status is BID and logged in as user1
+    ✔ Should return 200 with 1 objects if status is BID and logged in as user2
+    ✔ Should return 200 with 0 objects if status is ARCHIVE, logged in as user2
 
   Searching by query string
-    5) Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1
-    6) Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2
-    7) Should return 200, with 1 objects when searching all items with the string 'uv'
-    8) Should return 200, with 0 objects when searching all auctions with the string 'xxx'
+    ✔ Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1
+    ✔ Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2
+    ✔ Should return 200, with 1 objects when searching all items with the string 'uv'
+    ✔ Should return 200, with 0 objects when searching all auctions with the string 'xxx'
 
 
-  120 passing (273ms)
-  8 failing
+  128 passing (276ms)
 
-  1) Searching by status
-       Should return 200 with 0 objects if status is OPEN and logged in as user2:
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:190:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  2) Searching by status
-       Should return 200 with 0 objects if status is BID and logged in as user1:
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:203:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  3) Searching by status
-       Should return 200 with 1 objects if status is BID and logged in as user2:
-
-      AssertionError: expected 10 to equal 1
-      + expected - actual
-
-      -10
-      +1
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:216:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  4) Searching by status
-       Should return 200 with 0 objects if status is ARCHIVE, logged in as user2:
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:229:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  5) Searching by query string
-       Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1:
-
-      AssertionError: expected 10 to equal 6
-      + expected - actual
-
-      -10
-      +6
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:246:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  6) Searching by query string
-       Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2:
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:259:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  7) Searching by query string
-       Should return 200, with 1 objects when searching all items with the string 'uv':
-
-      AssertionError: expected 10 to equal 1
-      + expected - actual
-
-      -10
-      +1
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:271:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  8) Searching by query string
-       Should return 200, with 0 objects when searching all auctions with the string 'xxx':
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:283:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+ith the string 'uv'
+    ✔ Should return 200, with 0 objects when searching all auctions with the string 'xxx'
 
 
-
-:105:5)
-
-  8) Searching by query string
-       Should return 200, with 0 objects when searching all auctions with the string 'xxx':
-
-      AssertionError: expected 10 to equal +0
-      + expected - actual
-
-      -10
-      +0
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:283:44
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-
+  128 passing (276ms)
 

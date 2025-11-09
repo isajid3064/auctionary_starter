@@ -124,27 +124,58 @@ const getItemDetails = (itemId, done) => {
     });
 };
 
-const searchItems = ({ limit, offset }, done) => {
-  let sql = `
-    SELECT 
-      i.item_id,
-      i.name,
-      i.description,
-      i.end_date,
-      i.creator_id,
-      u.first_name,
-      u.last_name
-    FROM items i
-    LEFT JOIN users u ON i.creator_id = u.user_id
-    ORDER BY i.item_id DESC
-    LIMIT ${limit} OFFSET ${offset}
-  `;
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      return done({ status: 500, error: err.message || String(err) });
+const searchItems = ({ userId, q, status, limit, offset }, done) => {
+    let sql = `
+        SELECT 
+            i.item_id,
+            i.name,
+            i.description,
+            i.end_date,
+            i.creator_id,
+            u.first_name,
+            u.last_name
+        FROM items i
+        LEFT JOIN users u ON i.creator_id = u.user_id
+        WHERE 1 = 1
+    `;
+
+    const params = [];
+    const now = Math.floor(Date.now() / 1000);
+
+    if (status && userId) {
+        if (status === 'OPEN') {
+            sql += ' AND i.creator_id = ? AND i.end_date > ?';
+            params.push(userId, now);
+        } 
+        else if (status === 'ARCHIVE') {
+            sql += ' AND i.creator_id = ? AND i.end_date <= ?';
+            params.push(userId, now);
+        } 
+        else if (status === 'BID') {
+            sql += `
+                AND i.item_id IN (
+                    SELECT DISTINCT b.item_id
+                    FROM bids b
+                    WHERE b.user_id = ?
+                )
+            `;
+            params.push(userId);
+        }
     }
-    return done(null, rows || []);
-  });
+
+    if (q) {
+        sql += ' AND i.name LIKE ? COLLATE NOCASE';
+        params.push(`%${q}%`);
+    }
+
+    sql += ` ORDER BY i.item_id DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            return done({ status: 500, error: err.message || String(err) });
+        }
+        return done(null, rows || []);
+    });
 };
 
 
