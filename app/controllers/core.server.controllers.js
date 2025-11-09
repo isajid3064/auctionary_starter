@@ -116,10 +116,57 @@ const getItemDetails = (req, res) => {
     });
 };
 
+const searchItems = (req, res) => {
+    const token = req.get('X-Authorization');
+
+    const schema = Joi.object({
+        q: Joi.string().min(1).max(100).optional(),
+        status: Joi.string().valid('BID', 'OPEN', 'ARCHIVE').optional(),
+        limit: Joi.number().integer().min(1).max(100).default(20),
+        offset: Joi.number().integer().min(0).default(0)
+    });
+
+    const { error, value } = schema.validate(req.query);
+    if (error) {
+        return res.status(400).json({ error_message: error.details[0].message });
+    }
+
+    const { q, status, limit, offset } = value;
+
+    if (!token && !status) {
+        return core.searchItems({ q, limit, offset }, (err, results) => {
+            if (err) {
+                return res.status(err.status || 500).json({ error_message: err.error });
+            }
+            return res.status(200).json(results);
+        });
+    }
+
+    if (!token && status) {
+        return res
+            .status(400)
+            .json({ error_message: "Authentication required for status filter" });
+    }
+
+    users.getIdFromToken(token, (err, userId) => {
+        if (err || !userId) {
+            return res.status(400).json({ error_message: "Invalid token" });
+        }
+
+        core.searchItems({ userId, q, status, limit, offset }, (err2, results) => {
+            if (err2) {
+                return res.status(err2.status || 500).json({ error_message: err2.error });
+            }
+            return res.status(200).json(results);
+        });
+    });
+};
+
 
 module.exports = {
     createItem: createItem,
     bidOnItem:bidOnItem,
     getItemBidHistory: getItemBidHistory,
-    getItemDetails: getItemDetails
+    getItemDetails: getItemDetails,
+    searchItems: searchItems
 };

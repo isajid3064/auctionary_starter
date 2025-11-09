@@ -124,9 +124,34 @@ const getItemDetails = (itemId, done) => {
     });
 };
 
+const searchItems = ({ limit, offset }, done) => {
+  let sql = `
+    SELECT 
+      i.item_id,
+      i.name,
+      i.description,
+      i.end_date,
+      i.creator_id,
+      u.first_name,
+      u.last_name
+    FROM items i
+    LEFT JOIN users u ON i.creator_id = u.user_id
+    ORDER BY i.item_id DESC
+    LIMIT ${limit} OFFSET ${offset}
+  `;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return done({ status: 500, error: err.message || String(err) });
+    }
+    return done(null, rows || []);
+  });
+};
+
+
 module.exports = {
     CreateItem: CreateItem,
     bidOnItem: bidOnItem,
     getItemBidHistory: getItemBidHistory,
-    getItemDetails: getItemDetails
+    getItemDetails: getItemDetails,
+    searchItems: searchItems
 };

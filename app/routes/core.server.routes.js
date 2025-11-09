@@ -14,5 +14,8 @@ module.exports = function(app) {
     
     app.route('/item/:item_id/bid')
         .get(core.getItemBidHistory)
-        .post(auth.isAuthenticated,core.bidOnItem);       
+        .post(auth.isAuthenticated,core.bidOnItem);
+        
+    app.route('/search')
+        .get(core.searchItems);
 };
