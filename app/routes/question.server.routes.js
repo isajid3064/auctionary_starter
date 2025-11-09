@@ -8,6 +8,7 @@ module.exports = function(app) {
 
     app.route('/item/:item_id/question')
         .post(auth.isAuthenticated, questions.createQuestion)
+        .get(questions.getQuestionsByItemId);
 
     app.route('/question/:question_id')
         .post(auth.isAuthenticated,questions.answerQuestion);

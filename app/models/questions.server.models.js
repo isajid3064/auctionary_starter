@@ -62,7 +62,31 @@ const answerQuestion = (answerData, done) => {
    });
 };
 
+const getQuestionsByItemId = (itemId, done) => {
+    const sqlCheckItem = 'SELECT * FROM items WHERE item_id = ?';
+    db.get(sqlCheckItem, [itemId], (err, item) => {
+        if (err) return done({ status: 500, error: err });
+        if (!item) return done({ status: 404, error: "Item not found" });
+
+        const sql = `
+            SELECT 
+                question_id,
+                question AS question_text,
+                answer AS answer_text
+            FROM questions
+            WHERE item_id = ?
+            ORDER BY question_id DESC
+        `;
+
+        db.all(sql, [itemId], (err, rows) => {
+            if (err) return done({ status: 500, error: err });
+            return done(null, rows || []);
+        });
+    });
+};
+
 module.exports = {
     createQuestion,
-    answerQuestion
+    answerQuestion,
+    getQuestionsByItemId
 };

@@ -72,7 +72,19 @@ const answerQuestion = (req, res) => {
     });
 };
 
+const getQuestionsByItemId = (req, res) => {
+    const itemId = parseInt(req.params.item_id);
+
+    questions.getQuestionsByItemId(itemId, (err, questionsList) => {
+        if (err) {
+            return res.status(err.status || 500).json({ error_message: err.error });
+        }
+        return res.status(200).json(questionsList);
+    });
+};
+
 module.exports = {
     createQuestion,
-    answerQuestion
+    answerQuestion,
+    getQuestionsByItemId
 };

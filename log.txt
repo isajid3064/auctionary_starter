@@ -179,8 +179,8 @@
 
   Test retrieving questions
     ✔ Should return 404 if the item does not exist
-    5) Should return 200, but with an empty list if the item has no questions
-    6) Should return 200, with 2 questions on item 1. One question should have an answer and new questions should appear first.
+    ✔ Should return 200, but with an empty list if the item has no questions
+    ✔ Should return 200, with 2 questions on item 1. One question should have an answer and new questions should appear first.
 
   Log into account.
 [Script: test.i.search.js]
@@ -188,31 +188,31 @@
     ✔ Should return 200, and JSON with user_id and session_token
 
   Searching with no criteria, and no authentication, to test pagination.
-    7) Should return 200, with an array of 10 objects
-    8) Should return 200, with an array of 9 objects when offsetting by 1
-    9) Should return 200, with an array of 8 objects when offsetting by 2
-    10) Should return 200, with an array of 5 objects when limiting to 5
-    11) Should return 200, with an array of 0 objects when limiting to 5 and offsetting by 10
+    5) Should return 200, with an array of 10 objects
+    6) Should return 200, with an array of 9 objects when offsetting by 1
+    7) Should return 200, with an array of 8 objects when offsetting by 2
+    8) Should return 200, with an array of 5 objects when limiting to 5
+    9) Should return 200, with an array of 0 objects when limiting to 5 and offsetting by 10
 
   Searching by status
-    12) Should return 400 if status is not recognised
-    13) Should return 400 if status is BID but not authenticated
-    14) Should return 400 if status is OPEN but not authenticated
-    15) Should return 200 with 10 objects if status is OPEN and logged in as user1
-    16) Should return 200 with 0 objects if status is OPEN and logged in as user2
-    17) Should return 200 with 0 objects if status is BID and logged in as user1
-    18) Should return 200 with 1 objects if status is BID and logged in as user2
-    19) Should return 200 with 0 objects if status is ARCHIVE, logged in as user2
+    10) Should return 400 if status is not recognised
+    11) Should return 400 if status is BID but not authenticated
+    12) Should return 400 if status is OPEN but not authenticated
+    13) Should return 200 with 10 objects if status is OPEN and logged in as user1
+    14) Should return 200 with 0 objects if status is OPEN and logged in as user2
+    15) Should return 200 with 0 objects if status is BID and logged in as user1
+    16) Should return 200 with 1 objects if status is BID and logged in as user2
+    17) Should return 200 with 0 objects if status is ARCHIVE, logged in as user2
 
   Searching by query string
-    20) Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1
-    21) Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2
-    22) Should return 200, with 1 objects when searching all items with the string 'uv'
-    23) Should return 200, with 0 objects when searching all auctions with the string 'xxx'
+    18) Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1
+    19) Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2
+    20) Should return 200, with 1 objects when searching all items with the string 'uv'
+    21) Should return 200, with 0 objects when searching all auctions with the string 'xxx'
 
 
-  105 passing (286ms)
-  23 failing
+  107 passing (285ms)
+  21 failing
 
   1) Getting user details of a user that does not exist
        Should return 404:
@@ -262,31 +262,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.g.view.user.js:111:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  5) Test retrieving questions
-       Should return 200, but with an empty list if the item has no questions:
-
-      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
-      + expected - actual
-
-      -404
-      +200
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:334:37
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  6) Test retrieving questions
-       Should return 200, with 2 questions on item 1. One question should have an answer and new questions should appear first.:
-
-      AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
-      + expected - actual
-
-      -404
-      +200
-      
-      at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.h.auction.questions.js:343:37
-      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-
-  7) Searching with no criteria, and no authentication, to test pagination.
+  5) Searching with no criteria, and no authentication, to test pagination.
        Should return 200, with an array of 10 objects:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -298,7 +274,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:71:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  8) Searching with no criteria, and no authentication, to test pagination.
+  6) Searching with no criteria, and no authentication, to test pagination.
        Should return 200, with an array of 9 objects when offsetting by 1:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -310,7 +286,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:91:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  9) Searching with no criteria, and no authentication, to test pagination.
+  7) Searching with no criteria, and no authentication, to test pagination.
        Should return 200, with an array of 8 objects when offsetting by 2:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -322,7 +298,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:103:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  10) Searching with no criteria, and no authentication, to test pagination.
+  8) Searching with no criteria, and no authentication, to test pagination.
        Should return 200, with an array of 5 objects when limiting to 5:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -334,7 +310,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:115:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  11) Searching with no criteria, and no authentication, to test pagination.
+  9) Searching with no criteria, and no authentication, to test pagination.
        Should return 200, with an array of 0 objects when limiting to 5 and offsetting by 10:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -346,7 +322,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:127:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  12) Searching by status
+  10) Searching by status
        Should return 400 if status is not recognised:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
@@ -358,7 +334,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:142:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  13) Searching by status
+  11) Searching by status
        Should return 400 if status is BID but not authenticated:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
@@ -370,7 +346,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:153:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  14) Searching by status
+  12) Searching by status
        Should return 400 if status is OPEN but not authenticated:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 400 but got 404
@@ -382,7 +358,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:164:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  15) Searching by status
+  13) Searching by status
        Should return 200 with 10 objects if status is OPEN and logged in as user1:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -394,7 +370,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:176:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  16) Searching by status
+  14) Searching by status
        Should return 200 with 0 objects if status is OPEN and logged in as user2:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -406,7 +382,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:189:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  17) Searching by status
+  15) Searching by status
        Should return 200 with 0 objects if status is BID and logged in as user1:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -418,7 +394,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:202:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  18) Searching by status
+  16) Searching by status
        Should return 200 with 1 objects if status is BID and logged in as user2:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -430,7 +406,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:215:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  19) Searching by status
+  17) Searching by status
        Should return 200 with 0 objects if status is ARCHIVE, logged in as user2:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -442,7 +418,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:228:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  20) Searching by query string
+  18) Searching by query string
        Should return 200, with 6 objects when searching OPEN auctions with the string 'and' as user 1:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -454,7 +430,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:245:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  21) Searching by query string
+  19) Searching by query string
        Should return 200, with 0 objects when searching OPEN auctions with the string 'and' as user 2:
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -466,7 +442,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:258:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  22) Searching by query string
+  20) Searching by query string
        Should return 200, with 1 objects when searching all items with the string 'uv':
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -478,7 +454,7 @@
       at /Users/ibrahimsajid/Documents/GitHub/full_stack_web_development/tests/test.i.search.js:270:37
       at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
 
-  23) Searching by query string
+  21) Searching by query string
        Should return 200, with 0 objects when searching all auctions with the string 'xxx':
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
@@ -492,9 +468,9 @@
 
 
 
-s (node:internal/process/task_queues:105:5)
+ (node:internal/process/task_queues:105:5)
 
-  23) Searching by query string
+  21) Searching by query string
        Should return 200, with 0 objects when searching all auctions with the string 'xxx':
 
       AssertionError: expected Response{ _events: {}, …(34), …(2) } to have status code 200 but got 404
