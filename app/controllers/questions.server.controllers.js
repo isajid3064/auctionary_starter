@@ -1,6 +1,7 @@
 const questions = require('../models/questions.server.models');
 const users = require('../models/user.server.models');
 const Joi = require('joi');
+const profanityFilter = require('../utils/profanityFilter');
 
 const createQuestion = (req, res) => {
     const token = req.get('X-Authorization');
@@ -23,7 +24,7 @@ const createQuestion = (req, res) => {
         }
 
         const questionToCreate = {
-            question: req.body.question_text,
+            question: profanityFilter(req.body.question_text),
             asked_by: userId,
             item_id: parseInt(req.params.item_id)
         };
@@ -59,7 +60,7 @@ const answerQuestion = (req, res) => {
 
         const questionToAnswer = {
             question_id: parseInt(req.params.question_id),
-            answer: req.body.answer_text,
+            answer: profanityFilter(req.body.answer_text),
             answered_by: userId,
         };
 

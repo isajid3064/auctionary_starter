@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const core = require('../models/core.server.models');
 const users = require('../models/user.server.models');
+const profanityFilter = require('../utils/profanityFilter');
 
 const createItem = (req, res) => {
     const token = req.get('X-Authorization');
@@ -26,8 +27,8 @@ const createItem = (req, res) => {
         }
 
         let itemToCreate = {
-            name: req.body.name,
-            description: req.body.description,
+            name: profanityFilter(req.body.name),
+            description: profanityFilter(req.body.description),
             starting_bid: req.body.starting_bid,
             end_date: req.body.end_date,
             creator_id: userId

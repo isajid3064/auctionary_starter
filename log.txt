@@ -211,11 +211,11 @@
     ✔ Should return 200, with 0 objects when searching all auctions with the string 'xxx'
 
 
-  128 passing (276ms)
+  128 passing (402ms)
 
 ith the string 'uv'
     ✔ Should return 200, with 0 objects when searching all auctions with the string 'xxx'
 
 
-  128 passing (276ms)
+  128 passing (402ms)
 
