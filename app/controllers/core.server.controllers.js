@@ -117,6 +117,49 @@ const getItemDetails = (req, res) => {
     });
 };
 
+const getAllCategories = (req, res) => {
+    core.getAllCategories((err, categories) => {
+        if (err) {
+            return res.status(500).json({ error_message: "Server error" });
+        }
+        return res.status(200).json(categories);
+    });
+};
+
+const addCategoryType = (req , res) => {
+
+    const token = req.get('X-Authorization');
+    if (!token) {
+        return res.status(401).json({ error_message: "Missing token" });
+    }
+    
+    users.getIdFromToken(token, (err, userId) => {
+        if (err || !userId) {
+            return res.status(401).json({ error_message: "Invalid token" });
+        }
+
+        const schema = Joi.object({
+            type: Joi.string().min(3).max(50).required()
+        });
+
+        const { error } = schema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error_message: error.details[0].message });
+        }
+
+        let categoryType = {
+            type: req.body.type
+        };
+
+        core.addCategoryType(categoryType, (err, typeId) => {
+            if (err) {
+                return res.status(400).json({ error_message: "Couldn't add category type" });
+            }
+            return res.status(201).json({ type_id: typeId });
+        });
+    });
+};
+
 const searchItems = (req, res) => {
     const token = req.get('X-Authorization');
 
@@ -169,5 +212,7 @@ module.exports = {
     bidOnItem:bidOnItem,
     getItemBidHistory: getItemBidHistory,
     getItemDetails: getItemDetails,
-    searchItems: searchItems
+    searchItems: searchItems,
+    addCategoryType: addCategoryType,
+    getAllCategories: getAllCategories
 };

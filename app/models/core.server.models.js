@@ -9,6 +9,22 @@ const CreateItem = (itemData, done) => {
     });
 };
 
+const addCategoryType = (categoryData, done) => {
+    const sql = 'INSERT INTO categories (name) VALUES (?)';
+    let values = [categoryData.type];
+    db.run(sql, values, function(err) {
+        if(err) return done(err);
+        return done(null, this.lastID);
+    });
+};
+
+const getAllCategories = (done) => {
+    const sql = 'SELECT * FROM categories DISTICT';
+    db.all(sql, [], (err, rows) => {
+        if (err) return done(err);
+        return done(null, rows);
+    });
+};
 
 const bidOnItem = (bidData, done) => {
     const sqlCheck = 'SELECT creator_id, starting_bid FROM items WHERE item_id = ?';
@@ -184,5 +200,7 @@ module.exports = {
     bidOnItem: bidOnItem,
     getItemBidHistory: getItemBidHistory,
     getItemDetails: getItemDetails,
-    searchItems: searchItems
+    searchItems: searchItems,
+    addCategoryType: addCategoryType,
+    getAllCategories: getAllCategories
 };
