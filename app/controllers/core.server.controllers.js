@@ -43,6 +43,54 @@ const createItem = (req, res) => {
     });
 };
 
+const addCategoriesToItem = (req, res) => {
+    const token = req.get('X-Authorization');
+    const itemId = parseInt(req.params.item_id);
+
+    if (!token) {
+        return res.status(401).json({ error_message: "Missing token" });
+    }
+
+    users.getIdFromToken(token, (err, userId) => {
+        if (err || !userId) {
+            return res.status(401).json({ error_message: "Invalid token" });
+        }
+
+        const schema = Joi.object({
+            categories: Joi.array()
+                .items(Joi.string().min(1).max(50))
+                .min(1)
+                .required()
+        });
+
+        const { error } = schema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error_message: error.details[0].message });
+        }
+
+        const categories = req.body.categories;
+
+        core.getItemDetails(itemId, (errItem, item) => {
+            if (errItem || !item) {
+                return res.status(404).json({ error_message: "Item not found" });
+            }
+
+            if (item.creator_id !== userId) {
+                return res.status(403).json({ error_message: "You do not own this item" });
+            }
+
+            core.assignCategoriesToItem(itemId, categories, (errAssign) => {
+                if (errAssign) {
+                    return res.status(500).json({ error_message: "Couldn't assign categories to item" });
+                }
+
+                return res.status(200).json({ message: "Categories assigned successfully" });
+            });
+        });
+    });
+};
+
+
 const bidOnItem = (req, res) => {
     const token = req.get('X-Authorization');
     if (!token) {
@@ -214,5 +262,6 @@ module.exports = {
     getItemDetails: getItemDetails,
     searchItems: searchItems,
     addCategoryType: addCategoryType,
-    getAllCategories: getAllCategories
+    getAllCategories: getAllCategories,
+    addCategoriesToItem: addCategoriesToItem,
 };

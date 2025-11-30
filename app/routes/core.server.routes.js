@@ -19,7 +19,10 @@ module.exports = function(app) {
     app.route('/category')
         .post(auth.isAuthenticated,core.addCategoryType)
         .get(core.getAllCategories);
-        
+    
+    app.route('/item/:item_id/categories')
+        .post(auth.isAuthenticated,core.addCategoriesToItem);
+
     app.route('/search')
         .get(core.searchItems);
 };

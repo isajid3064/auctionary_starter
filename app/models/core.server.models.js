@@ -26,6 +26,42 @@ const getAllCategories = (done) => {
     });
 };
 
+const assignCategoriesToItem = (itemId, categoriesNames, done) => {
+    const FindCategorySql = 'SELECT category_id FROM categories WHERE name = ?';
+    const InsertItemCategorySql = 'INSERT INTO item_categories (item_id, category_id) VALUES (?, ?)';
+    const InsertCategorySql = 'INSERT INTO categories (name) VALUES (?)';
+
+    const processCategory = (index) => {
+        if (index >= categoriesNames.length) {
+            return done(null);
+        }
+
+        const categoryName = categoriesNames[index];
+
+        db.get(FindCategorySql, [categoryName], (err, row) => {
+            if (err) return done(err);
+
+            if (row) {
+                db.run(InsertItemCategorySql, [itemId, row.category_id], (err) => {
+                    if (err) return done(err);
+                    processCategory(index + 1);
+                });
+            } else {
+                db.run(InsertCategorySql, [categoryName], function(err) {
+                    if (err) return done(err);
+                    const newCategoryId = this.lastID;
+                    db.run(InsertItemCategorySql, [itemId, newCategoryId], (err) => {
+                        if (err) return done(err);
+                        processCategory(index + 1);
+                    });
+                });
+            }
+        });
+    };
+
+    processCategory(0);
+};
+
 const bidOnItem = (bidData, done) => {
     const sqlCheck = 'SELECT creator_id, starting_bid FROM items WHERE item_id = ?';
 
@@ -202,5 +238,6 @@ module.exports = {
     getItemDetails: getItemDetails,
     searchItems: searchItems,
     addCategoryType: addCategoryType,
-    getAllCategories: getAllCategories
+    getAllCategories: getAllCategories,
+    assignCategoriesToItem: assignCategoriesToItem
 };
